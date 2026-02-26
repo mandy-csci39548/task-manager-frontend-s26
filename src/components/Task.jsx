@@ -1,7 +1,13 @@
-import styles from './Task.module.css';
+import { useState } from 'react'
+import styles from './Task.module.css'
 
-const Task = ({ description }) => {
-  console.log(styles);
+const Task = ({
+  description,
+  completed,
+  deleteTask,
+  updateCompleted,
+  index,
+}) => {
   return (
     <div
       className={styles['task-container']}
@@ -12,10 +18,22 @@ const Task = ({ description }) => {
         gap: '10px',
       }}
     >
-      <input type='checkbox' id='task-checkbox' />
-      <span>{description}</span>
+      <input
+        type='checkbox'
+        id='task-checkbox'
+        checked={completed}
+        onChange={(e) => updateCompleted(index, e.target.checked)}
+      />
+      <span
+        style={{
+          textDecoration: completed ? 'line-through' : 'none',
+        }}
+      >
+        {description}
+      </span>
+      <button onClick={() => deleteTask(index)}>Delete</button>
     </div>
-  );
-};
+  )
+}
 
-export default Task;
+export default Task
