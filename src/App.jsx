@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TaskList } from './components'
+import { TaskForm, TaskList } from './components'
 
 const App = () => {
   const [tasks, setTasks] = useState([
@@ -31,11 +31,14 @@ const App = () => {
   }
 
   return (
-    <TaskList
-      tasks={tasks}
-      deleteTask={deleteTask}
-      updateCompleted={updateCompleted}
-    />
+    <div>
+      <TaskForm />
+      <TaskList
+        tasks={tasks}
+        deleteTask={deleteTask}
+        updateCompleted={updateCompleted}
+      />
+    </div>
   )
 }
 

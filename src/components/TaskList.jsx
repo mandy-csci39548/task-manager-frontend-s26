@@ -5,7 +5,6 @@ const TaskList = ({ tasks = [], deleteTask, updateCompleted }) => {
     return <p>No tasks to display!</p>
   }
 
-  console.log(tasks)
   return (
     <div>
       {tasks.map((task, index) => (
@@ -15,8 +14,6 @@ const TaskList = ({ tasks = [], deleteTask, updateCompleted }) => {
           {...task}
           deleteTask={deleteTask}
           updateCompleted={updateCompleted}
-          // description={task.description}
-          // completed={task.completed}
         />
       ))}
 
