@@ -1,6 +1,11 @@
 import Task from './Task'
 
-const TaskList = ({ tasks = [], deleteTask, updateCompleted }) => {
+const TaskList = ({
+  tasks = [],
+  deleteTask,
+  updateCompleted,
+  updateDescription,
+}) => {
   if (!tasks.length) {
     return <p>No tasks to display!</p>
   }
@@ -14,6 +19,7 @@ const TaskList = ({ tasks = [], deleteTask, updateCompleted }) => {
           {...task}
           deleteTask={deleteTask}
           updateCompleted={updateCompleted}
+          updateDescription={updateDescription}
         />
       ))}
 

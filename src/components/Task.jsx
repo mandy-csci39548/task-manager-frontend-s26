@@ -1,12 +1,23 @@
+import { useState } from 'react'
 import styles from './Task.module.css'
+import EditDescription from './EditDescription'
 
 const Task = ({
   description,
   completed,
   deleteTask,
   updateCompleted,
+  updateDescription,
   index,
 }) => {
+  const [editing, setEditing] = useState(false)
+
+  const onEdit = (index, description) => {
+    updateDescription(index, description)
+    // add additional functionality
+    setEditing(false)
+  }
+
   return (
     <div
       className={styles['task-container']}
@@ -23,14 +34,31 @@ const Task = ({
         checked={completed}
         onChange={(e) => updateCompleted(index, e.target.checked)}
       />
-      <span
-        style={{
-          textDecoration: completed ? 'line-through' : 'none',
+      {editing ? (
+        <EditDescription
+          index={index}
+          description={description}
+          onEdit={onEdit}
+          onCancel={() => setEditing(false)}
+        />
+      ) : (
+        <span
+          style={{
+            textDecoration: completed ? 'line-through' : 'none',
+          }}
+        >
+          {description}
+        </span>
+      )}
+      {!completed && <button onClick={() => setEditing(true)}>Edit</button>}
+      <button
+        onClick={() => {
+          deleteTask(index)
+          setEditing(false)
         }}
       >
-        {description}
-      </span>
-      <button onClick={() => deleteTask(index)}>Delete</button>
+        Delete
+      </button>
     </div>
   )
 }

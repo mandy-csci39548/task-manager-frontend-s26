@@ -24,10 +24,23 @@ const App = () => {
     setTasks((t) => t.filter((task, idx) => idx !== index))
   }
 
-  const updateCompleted = (index, completed) => {
-    setTasks(
-      tasks.map((task, idx) => (idx === index ? { ...task, completed } : task)),
+  const updateTask = (index, field, value) => {
+    // { [field]: value  }
+    // field = description
+    // { description: value }
+    const updatedTasks = tasks.map((task, idx) =>
+      idx === index ? { ...task, [field]: value } : task,
     )
+
+    setTasks(updatedTasks)
+  }
+
+  const updateCompleted = (index, completed) => {
+    updateTask(index, 'completed', completed)
+  }
+
+  const updateDescription = (index, description) => {
+    updateTask(index, 'description', description)
   }
 
   const addTask = (description) => {
@@ -49,6 +62,7 @@ const App = () => {
         tasks={tasks}
         deleteTask={deleteTask}
         updateCompleted={updateCompleted}
+        updateDescription={updateDescription}
       />
     </div>
   )
