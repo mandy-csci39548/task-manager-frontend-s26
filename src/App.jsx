@@ -30,9 +30,21 @@ const App = () => {
     )
   }
 
+  const addTask = (description) => {
+    // Create a new task object
+    const newTask = {
+      id: tasks.length + 1,
+      description,
+      completed: false,
+    }
+
+    // Update the state (tasks) to include this new task object
+    setTasks([...tasks, newTask])
+  }
+
   return (
     <div>
-      <TaskForm />
+      <TaskForm addTask={addTask} />
       <TaskList
         tasks={tasks}
         deleteTask={deleteTask}
