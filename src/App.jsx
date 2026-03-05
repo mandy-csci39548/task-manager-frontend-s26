@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import { TaskForm, TaskList } from './components'
+import { useReducer } from 'react'
+import { TaskForm, TaskList, tasksReducer } from './components'
 
 const App = () => {
-  const [tasks, setTasks] = useState([
+  const initialTasks = [
     {
       id: 1,
       description: 'Finish react project',
@@ -18,41 +18,40 @@ const App = () => {
       description: 'Submit assignment',
       completed: true,
     },
-  ])
+  ]
+
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks)
 
   const deleteTask = (index) => {
-    setTasks((t) => t.filter((task, idx) => idx !== index))
-  }
-
-  const updateTask = (index, field, value) => {
-    // { [field]: value  }
-    // field = description
-    // { description: value }
-    const updatedTasks = tasks.map((task, idx) =>
-      idx === index ? { ...task, [field]: value } : task,
-    )
-
-    setTasks(updatedTasks)
+    dispatch({
+      type: 'deleted',
+      index,
+    })
   }
 
   const updateCompleted = (index, completed) => {
-    updateTask(index, 'completed', completed)
+    dispatch({
+      type: 'updated',
+      index,
+      field: 'completed',
+      value: completed,
+    })
   }
 
   const updateDescription = (index, description) => {
-    updateTask(index, 'description', description)
+    dispatch({
+      type: 'updated',
+      index,
+      field: 'description',
+      value: description,
+    })
   }
 
   const addTask = (description) => {
-    // Create a new task object
-    const newTask = {
-      id: tasks.length + 1,
+    dispatch({
+      type: 'added',
       description,
-      completed: false,
-    }
-
-    // Update the state (tasks) to include this new task object
-    setTasks([...tasks, newTask])
+    })
   }
 
   return (
