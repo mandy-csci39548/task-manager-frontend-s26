@@ -1,5 +1,5 @@
 import { useReducer } from 'react'
-import { TaskForm, TaskList, tasksReducer } from './components'
+import { TaskForm, TaskList, TasksContext, tasksReducer } from './components'
 
 const App = () => {
   const initialTasks = [
@@ -55,15 +55,13 @@ const App = () => {
   }
 
   return (
-    <div>
-      <TaskForm addTask={addTask} />
-      <TaskList
-        tasks={tasks}
-        deleteTask={deleteTask}
-        updateCompleted={updateCompleted}
-        updateDescription={updateDescription}
-      />
-    </div>
+    // Provider
+    <TasksContext value={{ deleteTask, updateCompleted, updateDescription }}>
+      <div>
+        <TaskForm addTask={addTask} />
+        <TaskList tasks={tasks} />
+      </div>
+    </TasksContext>
   )
 }
 

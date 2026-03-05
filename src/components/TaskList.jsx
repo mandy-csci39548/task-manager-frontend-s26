@@ -1,11 +1,6 @@
 import Task from './Task'
 
-const TaskList = ({
-  tasks = [],
-  deleteTask,
-  updateCompleted,
-  updateDescription,
-}) => {
+const TaskList = ({ tasks = [] }) => {
   if (!tasks.length) {
     return <p>No tasks to display!</p>
   }
@@ -13,14 +8,7 @@ const TaskList = ({
   return (
     <div>
       {tasks.map((task, index) => (
-        <Task
-          key={index}
-          index={index}
-          {...task}
-          deleteTask={deleteTask}
-          updateCompleted={updateCompleted}
-          updateDescription={updateDescription}
-        />
+        <Task key={index} index={index} {...task} />
       ))}
 
       {tasks.length > 0 && <p>There are {tasks.length} tasks.</p>}

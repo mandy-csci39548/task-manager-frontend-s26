@@ -1,16 +1,11 @@
 import { useState } from 'react'
 import styles from './Task.module.css'
 import EditDescription from './EditDescription'
+import { useTasksContext } from './context'
 
-const Task = ({
-  description,
-  completed,
-  deleteTask,
-  updateCompleted,
-  updateDescription,
-  index,
-}) => {
+const Task = ({ description, completed, index }) => {
   const [editing, setEditing] = useState(false)
+  const { deleteTask, updateDescription, updateCompleted } = useTasksContext()
 
   const onEdit = (index, description) => {
     updateDescription(index, description)
