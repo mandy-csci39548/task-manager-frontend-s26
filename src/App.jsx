@@ -1,5 +1,6 @@
-import { useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { TaskForm, TaskList, TasksContext, tasksReducer } from './components'
+import axios from 'axios'
 
 const App = () => {
   const initialTasks = [
@@ -53,6 +54,30 @@ const App = () => {
       description,
     })
   }
+
+  useEffect(() => {
+    const getTasks = async () => {
+      try {
+        const { data } = await axios.get(
+          'https://68ebf9e7eff9ad3b14010278.mockapi.io/api/tasks',
+        )
+
+        // setTasks(data) // if not using reducers
+        dispatch({
+          type: 'set',
+          tasks: data,
+        })
+      } catch {
+        // setTasks([])
+        dispatch({
+          type: 'set',
+          tasks: [],
+        })
+      }
+    }
+
+    getTasks()
+  }, [])
 
   return (
     // Provider

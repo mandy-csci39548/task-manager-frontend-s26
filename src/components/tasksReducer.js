@@ -15,5 +15,9 @@ export const tasksReducer = (tasks, action) => {
     return tasks.map((task, idx) =>
       idx === index ? { ...task, [field]: value } : task,
     )
+  } else if (action.type === 'set') {
+    return action.tasks
+  } else {
+    return tasks
   }
 }
