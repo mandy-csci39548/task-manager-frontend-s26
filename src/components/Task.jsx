@@ -2,8 +2,10 @@ import { useState } from 'react'
 import styles from './Task.module.css'
 import EditDescription from './EditDescription'
 import { useTasksContext } from './context'
+import { useNavigate } from 'react-router-dom'
 
-const Task = ({ description, completed, index }) => {
+const Task = ({ description, completed, id, index }) => {
+  const navigate = useNavigate()
   const [editing, setEditing] = useState(false)
   const { deleteTask, updateDescription, updateCompleted } = useTasksContext()
 
@@ -54,6 +56,8 @@ const Task = ({ description, completed, index }) => {
       >
         Delete
       </button>
+
+      <button onClick={() => navigate(`/tasks/${id}`)}>View</button>
     </div>
   )
 }
