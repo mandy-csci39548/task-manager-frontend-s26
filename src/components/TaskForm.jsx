@@ -1,3 +1,4 @@
+import { Field, Input } from '@chakra-ui/react'
 import { useState } from 'react'
 
 const TaskForm = ({ addTask }) => {
@@ -11,15 +12,15 @@ const TaskForm = ({ addTask }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        New Task:
-        <input
+      <Field.Root>
+        <Field.Label>New Task</Field.Label>
+        <Input
           name='description'
           placeholder='Enter task description'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-      </label>
+      </Field.Root>
     </form>
   )
 }

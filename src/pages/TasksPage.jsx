@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from 'react'
 import { TaskForm, TaskList, TasksContext, tasksReducer } from '../components'
 import axios from 'axios'
+import { Flex } from '@chakra-ui/react'
 
 const TasksPage = () => {
   const [tasks, dispatch] = useReducer(tasksReducer, [])
@@ -64,10 +65,10 @@ const TasksPage = () => {
   return (
     // Provider
     <TasksContext value={{ deleteTask, updateCompleted, updateDescription }}>
-      <div>
+      <Flex direction='column' gap={2}>
         <TaskForm addTask={addTask} />
         <TaskList tasks={tasks} />
-      </div>
+      </Flex>
     </TasksContext>
   )
 }

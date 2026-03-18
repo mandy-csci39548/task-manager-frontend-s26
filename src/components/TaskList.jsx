@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react'
 import Task from './Task'
 
 const TaskList = ({ tasks = [] }) => {
@@ -6,13 +7,13 @@ const TaskList = ({ tasks = [] }) => {
   }
 
   return (
-    <div>
+    <Box w='full'>
       {tasks.map((task, index) => (
         <Task key={index} index={index} {...task} />
       ))}
 
       {tasks.length > 0 && <p>There are {tasks.length} tasks.</p>}
-    </div>
+    </Box>
   )
 }
 

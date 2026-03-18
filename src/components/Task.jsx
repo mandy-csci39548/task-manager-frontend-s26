@@ -1,8 +1,15 @@
 import { useState } from 'react'
-import styles from './Task.module.css'
 import EditDescription from './EditDescription'
 import { useTasksContext } from './context'
 import { useNavigate } from 'react-router-dom'
+import {
+  Button,
+  ButtonGroup,
+  Checkbox,
+  Flex,
+  Spacer,
+  Text,
+} from '@chakra-ui/react'
 
 const Task = ({ description, completed, id, index }) => {
   const navigate = useNavigate()
@@ -16,21 +23,16 @@ const Task = ({ description, completed, id, index }) => {
   }
 
   return (
-    <div
-      className={styles['task-container']}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '2px',
-        gap: '10px',
-      }}
-    >
-      <input
-        type='checkbox'
-        id='task-checkbox'
+    <Flex gap={2} align='center' my={2}>
+      <Checkbox.Root
+        id={`task-checkbox-${index}`}
         checked={completed}
         onChange={(e) => updateCompleted(index, e.target.checked)}
-      />
+        size='xs'
+        colorPalette='purple'
+      >
+        <Checkbox.HiddenInput /> <Checkbox.Control />
+      </Checkbox.Root>
       {editing ? (
         <EditDescription
           index={index}
@@ -39,26 +41,29 @@ const Task = ({ description, completed, id, index }) => {
           onCancel={() => setEditing(false)}
         />
       ) : (
-        <span
+        <Text
           style={{
             textDecoration: completed ? 'line-through' : 'none',
           }}
         >
           {description}
-        </span>
+        </Text>
       )}
-      {!completed && <button onClick={() => setEditing(true)}>Edit</button>}
-      <button
-        onClick={() => {
-          deleteTask(index)
-          setEditing(false)
-        }}
-      >
-        Delete
-      </button>
+      <Spacer />
+      <ButtonGroup colorPalette='purple' variant='surface' size='xs' attached>
+        {!completed && <Button onClick={() => setEditing(true)}>Edit</Button>}
+        <Button
+          onClick={() => {
+            deleteTask(index)
+            setEditing(false)
+          }}
+        >
+          Delete
+        </Button>
 
-      <button onClick={() => navigate(`/tasks/${id}`)}>View</button>
-    </div>
+        <Button onClick={() => navigate(`/tasks/${id}`)}>View</Button>
+      </ButtonGroup>
+    </Flex>
   )
 }
 

@@ -1,3 +1,4 @@
+import { Input } from '@chakra-ui/react'
 import { useState } from 'react'
 
 const EditDescription = ({ index, description, onEdit, onCancel }) => {
@@ -10,8 +11,9 @@ const EditDescription = ({ index, description, onEdit, onCancel }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
+      <Input
         id={`edit-description-${index}`}
+        variant='flushed'
         name='description'
         placeholder='Enter description'
         value={newDescription}
