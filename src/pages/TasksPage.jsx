@@ -6,10 +6,13 @@ import { Flex } from '@chakra-ui/react'
 const TasksPage = () => {
   const [tasks, dispatch] = useReducer(tasksReducer, [])
 
-  const deleteTask = (index) => {
+  const deleteTask = async (index) => {
+    const task = tasks[index]
+    await axios.delete(`http://localhost:8000/tasks/${task.id}`)
+
     dispatch({
-      type: 'deleted',
-      index,
+      type: 'set',
+      tasks: tasks.filter((t) => t.id !== task.id),
     })
   }
 
@@ -22,28 +25,36 @@ const TasksPage = () => {
     })
   }
 
-  const updateDescription = (index, description) => {
+  const updateDescription = async (index, description) => {
+    const task = tasks[index]
+
+    const { data } = await axios.put(`http://localhost:8000/tasks/${task.id}`, {
+      ...task,
+      description,
+    })
+
     dispatch({
-      type: 'updated',
-      index,
-      field: 'description',
-      value: description,
+      type: 'set',
+      tasks: tasks.map((t) => (t.id === task.id ? data : t)),
     })
   }
 
-  const addTask = (description) => {
-    dispatch({
-      type: 'added',
+  const addTask = async (description) => {
+    const { data } = await axios.post(`http://localhost:8000/tasks`, {
       description,
+      completed: false,
+    })
+
+    dispatch({
+      type: 'set',
+      tasks: [...tasks, data],
     })
   }
 
   useEffect(() => {
     const getTasks = async () => {
       try {
-        const { data } = await axios.get(
-          'https://68ebf9e7eff9ad3b14010278.mockapi.io/api/tasks',
-        )
+        const { data } = await axios.get('http://localhost:8000/tasks')
 
         // setTasks(data) // if not using reducers
         dispatch({
