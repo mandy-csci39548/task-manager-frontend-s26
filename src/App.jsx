@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { HomePage, TasksDetailPage, TasksPage } from './pages'
+import { HomePage, LoginPage, TasksDetailPage, TasksPage } from './pages'
 import { MainLayout } from './layouts'
 
 const App = () => {
@@ -7,6 +7,7 @@ const App = () => {
     <Routes>
       <Route path='/' element={<MainLayout />}>
         <Route index element={<HomePage />} />
+        <Route path='login' element={<LoginPage />} />
         <Route path='tasks'>
           <Route index element={<TasksPage />} />
           <Route path=':id' element={<TasksDetailPage />} />

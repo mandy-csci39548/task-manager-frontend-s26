@@ -29,7 +29,7 @@ const HomePage = () => {
             <Button variant='surface' as={Link} to='/tasks'>
               Go to my tasks
             </Button>
-            <Button>
+            <Button as={Link} to='/login'>
               Login <LuMoveRight />
             </Button>
           </ButtonGroup>

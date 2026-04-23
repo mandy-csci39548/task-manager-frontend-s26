@@ -14,9 +14,11 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { LuCheck, LuListTodo, LuMoveRight } from 'react-icons/lu'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 const MainLayout = () => {
+  const token = localStorage.getItem('token')
+  const navigate = useNavigate()
   return (
     <Box bg='gray.50' display='flex' minH='100vh' flexDirection='column'>
       {/* Navbar */}
@@ -30,9 +32,20 @@ const MainLayout = () => {
             <Spacer />
             <HStack gap={4}>
               <Link to='/tasks'>Tasks</Link>
-              <Button size='sm' colorPalette='purple'>
-                Login
-              </Button>
+              {token ? (
+                <Button
+                  onClick={() => {
+                    localStorage.removeItem('token')
+                    navigate('/')
+                  }}
+                >
+                  Logout
+                </Button>
+              ) : (
+                <Button size='sm' colorPalette='purple' as={Link} to='/login'>
+                  Login
+                </Button>
+              )}
             </HStack>
           </Flex>
         </Container>

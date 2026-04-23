@@ -8,7 +8,12 @@ const TasksPage = () => {
 
   const deleteTask = async (index) => {
     const task = tasks[index]
-    await axios.delete(`http://localhost:8000/tasks/${task.id}`)
+    const token = localStorage.getItem('token')
+    await axios.delete(`http://localhost:8000/tasks/${task.id}`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
 
     dispatch({
       type: 'set',
@@ -28,10 +33,19 @@ const TasksPage = () => {
   const updateDescription = async (index, description) => {
     const task = tasks[index]
 
-    const { data } = await axios.put(`http://localhost:8000/tasks/${task.id}`, {
-      ...task,
-      description,
-    })
+    const token = localStorage.getItem('token')
+    const { data } = await axios.put(
+      `http://localhost:8000/tasks/${task.id}`,
+      {
+        ...task,
+        description,
+      },
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      },
+    )
 
     dispatch({
       type: 'set',
@@ -40,10 +54,15 @@ const TasksPage = () => {
   }
 
   const addTask = async (description) => {
-    const { data } = await axios.post(`http://localhost:8000/tasks`, {
-      description,
-      completed: false,
-    })
+    const token = localStorage.getItem('token')
+    const { data } = await axios.post(
+      `http://localhost:8000/tasks`,
+      {
+        description,
+        completed: false,
+      },
+      { headers: { Authorization: `Token ${token}` } },
+    )
 
     dispatch({
       type: 'set',
@@ -54,7 +73,12 @@ const TasksPage = () => {
   useEffect(() => {
     const getTasks = async () => {
       try {
-        const { data } = await axios.get('http://localhost:8000/tasks')
+        const token = localStorage.getItem('token')
+        const { data } = await axios.get('http://localhost:8000/tasks', {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        })
 
         // setTasks(data) // if not using reducers
         dispatch({
